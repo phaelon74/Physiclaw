@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/banner.svg">
-    <source media="(prefers-color-scheme: light)" srcset=".github/banner.svg">
-    <img alt="Physiclaw — Specialized AI agents for your bare metal" src=".github/banner.svg" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/banner.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/banner.svg">
+    <img alt="Physiclaw — Specialized AI agents for your bare metal" src="assets/banner.svg" width="100%">
   </picture>
 </p>
 
@@ -236,7 +236,7 @@ npm start
 
 <p align="center">
   <a href="https://github.com/CommanderZed/Physiclaw">
-    <img src=".github/logo.svg" alt="Physiclaw" height="36" />
+    <img src="assets/logo.svg" alt="Physiclaw" height="36" />
   </a>
 </p>
 <p align="center">
