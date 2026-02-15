@@ -1,14 +1,22 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License" />
-  <img src="https://img.shields.io/badge/version-0.9--beta-gold?style=flat-square" alt="Version" />
-  <img src="https://img.shields.io/badge/status-active-brightgreen?style=flat-square" alt="Status" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/banner.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/banner.svg">
+    <img alt="Physiclaw — Specialized AI agents for your bare metal" src=".github/banner.svg" width="100%">
+  </picture>
 </p>
 
-# Physiclaw
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-F4D58D?style=flat-square&labelColor=001427" alt="License" /></a>&nbsp;
+  <img src="https://img.shields.io/badge/version-0.9--beta-BF0603?style=flat-square&labelColor=001427" alt="Version" />&nbsp;
+  <img src="https://img.shields.io/badge/status-active-708D81?style=flat-square&labelColor=001427" alt="Status" />&nbsp;
+  <img src="https://img.shields.io/badge/air--gap-ready-8aa89b?style=flat-square&labelColor=001427" alt="Air-Gap Ready" />
+</p>
 
-**Specialized AI agents for your bare metal. 100% On-Prem & Air-Gap ready.**
-
-Open-source agent orchestration that runs entirely on your infrastructure. No SaaS dependency, no telemetry, no phone-home. You own the entire stack.
+<p align="center">
+  <b>Open-source agent orchestration that runs entirely on your infrastructure.</b><br>
+  <sub>No SaaS dependency. No telemetry. No phone-home. You own the entire stack.</sub>
+</p>
 
 ---
 
@@ -16,10 +24,28 @@ Open-source agent orchestration that runs entirely on your infrastructure. No Sa
 
 Most AI agent platforms require cloud connectivity, send telemetry upstream, or lock you into a vendor's ecosystem. Physiclaw is different:
 
-- **Air-Gap Ready** -- Runs fully offline with no external trust boundaries
-- **Self-Hosted** -- Deploy on bare metal, VMs, or Kubernetes -- your hardware, your rules
-- **Open Source** -- Apache 2.0 licensed, community-driven
-- **Zero Telemetry** -- Nothing leaves your network, ever
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>Air-Gap Ready</h4>
+      <p>Runs fully offline with no external trust boundaries.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h4>Self-Hosted</h4>
+      <p>Deploy on bare metal, VMs, or Kubernetes — your hardware, your rules.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>Open Source</h4>
+      <p>Apache 2.0 licensed, community-driven, transparent by default.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h4>Zero Telemetry</h4>
+      <p>Nothing leaves your network. Ever.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -81,33 +107,37 @@ make build
 
 Physiclaw ships with pre-built agent personas, each loading its own toolchain:
 
-| Agent | Focus | Toolchain |
-|---|---|---|
-| **The SRE** | Site Reliability Engineering | Prometheus, K8s, Terraform, Grafana, Alerting |
-| **The SecOps Guardian** | Security Operations | Log Analysis, CVE Scanning, IAM, SIEM, Compliance |
-| **The Data Architect** | Data Engineering | SQL, ETL Pipelines, Snowflake, dbt, Data Quality |
-| **The Code Janitor** | Code Quality | Refactoring, Unit Tests, Linting, CI/CD, Docs |
+> **The SRE** — Site Reliability Engineering
+> `Prometheus` `K8s` `Terraform` `Grafana` `Alerting`
+> Watches uptime, manages IaC, auto-remediates.
+
+> **The SecOps Guardian** — Security Operations
+> `Log Analysis` `CVE Scanning` `IAM` `SIEM` `Compliance`
+> Triages alerts, enforces policy, hardens perimeter.
+
+> **The Data Architect** — Data Engineering
+> `SQL` `ETL Pipelines` `Snowflake` `dbt` `Data Quality`
+> Optimizes schemas, orchestrates pipelines, checks quality.
+
+> **The Code Janitor** — Code Quality
+> `Refactoring` `Unit Tests` `Linting` `CI/CD` `Docs`
+> Keeps CI green and tech debt low.
 
 ---
 
 ## Security Architecture
 
+<p align="center"><i>Nothing leaves your network.</i></p>
+
 Every layer runs inside your perimeter. Physiclaw implements defense-in-depth with five concentric security rings:
 
-### Zero Trust Isolation
-gVisor sandboxing, Seccomp-BPF syscall filters, eBPF network rules, UCAN capability tokens. Heap memory is AEAD-encrypted.
-
-### End-to-End Encryption
-mTLS via SPIFFE/SPIRE, auto-rotated X.509 certs. Data at rest sealed with XChaCha20-Poly1305. Key material never hits disk unencrypted.
-
-### Hardware Secrets
-API keys, model weights, and RAG credentials sealed to host hardware identity via HSM, TPM 2.0, Vault, and PKCS#11.
-
-### Observability & Provenance
-OpenTelemetry on every call. Outputs signed with attestation keys. Tamper-evident Merkle audit log. Offline verification via Sigstore.
-
-### Air-Gap & Compliance
-Runs fully offline. Model packages verified without internet. SOC 2 Type II, HIPAA, FedRAMP, ISO 27001 ready.
+| Ring | Layer | Primitives |
+|:---:|---|---|
+| 0 | **Zero Trust Isolation** | gVisor, Seccomp-BPF, eBPF, UCAN, AES-256 |
+| 1 | **End-to-End Encryption** | mTLS, SPIFFE, XChaCha20, X.509, Auto-Rotate |
+| 2 | **Hardware Secrets** | HSM, TPM 2.0, Vault, PKCS#11, Sealed Keys |
+| 3 | **Observability & Provenance** | OTel, Attestation, Merkle Log, Sigstore, WORM |
+| 4 | **Air-Gap & Compliance** | Offline, SOC 2, HIPAA, FedRAMP, ISO 27001 |
 
 ---
 
@@ -205,5 +235,10 @@ npm start
 ---
 
 <p align="center">
-  <sub>Built by the Physiclaw Contributors</sub>
+  <a href="https://github.com/CommanderZed/Physiclaw">
+    <img src=".github/logo.svg" alt="Physiclaw" height="22" />
+  </a>
+</p>
+<p align="center">
+  <sub>Built by the <a href="https://github.com/CommanderZed/Physiclaw">Physiclaw</a> Contributors</sub>
 </p>
