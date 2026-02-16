@@ -41,8 +41,8 @@ helm install physiclaw-core physiclaw/core \\
   {
     id: "source",
     label: "Source",
-    command: `git clone https://github.com/physiclaw/core.git
-cd core
+    command: `git clone https://github.com/CommanderZed/Physiclaw.git
+cd Physiclaw
 
 make deps
 make build

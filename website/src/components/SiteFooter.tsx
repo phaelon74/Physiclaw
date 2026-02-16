@@ -20,7 +20,7 @@ export default function SiteFooter() {
               Whitepaper
             </Link>
             <a
-              href="https://github.com/physiclaw"
+              href="https://github.com/CommanderZed/Physiclaw"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gold-light transition-colors flex items-center gap-1.5"
@@ -29,7 +29,7 @@ export default function SiteFooter() {
               GitHub
             </a>
             <a
-              href="https://github.com/physiclaw/core/blob/main/LICENSE"
+              href="https://www.apache.org/licenses/LICENSE-2.0.txt"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gold-light transition-colors"

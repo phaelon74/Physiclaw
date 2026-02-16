@@ -103,8 +103,8 @@ helm install physiclaw-core physiclaw/core \\
           </pre>
           <h3 className="text-lg font-semibold text-gold-light mt-6 mb-2">Build from source</h3>
           <pre className="bg-navy-300/50 border border-navy-200/50 rounded-lg p-4 text-sm text-sage overflow-x-auto">
-{`git clone https://github.com/physiclaw/core.git
-cd core
+{`git clone https://github.com/CommanderZed/Physiclaw.git
+cd Physiclaw
 make deps
 make build
 ./bin/physiclaw-server \\
@@ -121,35 +121,59 @@ make build
       content: (
         <>
           <p className="mb-4">
-            Physiclaw ships with pre-built agent personas, each loading its own toolchain:
+            Physiclaw ships with pre-built agent personas designed for enterprise workloads. Each persona loads a dedicated toolchain and operates within defined boundaries so you can grant autonomy where it matters while keeping control.
           </p>
-          <ul className="space-y-4 text-sage">
+          <ul className="space-y-5 text-sage">
             <li>
-              <strong className="text-gold-light">The SRE</strong> — Site Reliability Engineering. Prometheus, K8s, Terraform, Grafana, Alerting. Watches uptime, manages IaC, auto-remediates.
+              <strong className="text-gold-light">The SRE</strong> — Site Reliability Engineering. Uses Prometheus, Kubernetes, Terraform, Grafana, and alerting. Monitors uptime and SLOs, manages infrastructure as code, and can auto-remediate common failures (restart pods, scale, run playbooks) within policy. Suited for teams that want agents to handle tier-1 response and escalation.
             </li>
             <li>
-              <strong className="text-gold-light">The SecOps Guardian</strong> — Security Operations. Log analysis, CVE scanning, IAM, SIEM, Compliance. Triages alerts, enforces policy, hardens perimeter.
+              <strong className="text-gold-light">The SecOps Guardian</strong> — Security Operations. Toolchain includes log analysis, CVE scanning, IAM, SIEM, and compliance checks. Triages alerts, suggests or applies policy-driven hardening, and supports audit readiness. Actions can be configured to require approval for sensitive changes (e.g. firewall, IAM) while allowing read-only and low-risk automation.
             </li>
             <li>
-              <strong className="text-gold-light">The Data Architect</strong> — Data Engineering. SQL, ETL pipelines, Snowflake, dbt, Data Quality. Optimizes schemas, orchestrates pipelines, checks quality.
+              <strong className="text-gold-light">The Data Architect</strong> — Data Engineering. Works with SQL, ETL pipelines, Snowflake, dbt, and data quality frameworks. Optimizes schemas, orchestrates pipelines, and runs quality checks. Designed for data teams that want agents to own routine pipeline ops and reporting while keeping destructive or PII-touching actions under governance.
             </li>
             <li>
-              <strong className="text-gold-light">The Code Janitor</strong> — Code Quality. Refactoring, unit tests, linting, CI/CD, docs. Keeps CI green and tech debt low.
+              <strong className="text-gold-light">The Code Janitor</strong> — Code Quality. Covers refactoring, unit tests, linting, CI/CD, and docs. Keeps CI green and tech debt in check. Can be scoped to specific repos and branches; merge and release actions can be gated by approval or role so autonomy is limited to safe operations.
             </li>
           </ul>
         </>
       ),
     },
     {
-      id: "security",
-      title: "Security Architecture",
-      keywords: "security encryption zero trust HSM TPM audit compliance",
+      id: "agent-behavior",
+      title: "Agent Behavior and Autonomy",
+      keywords: "agent behavior autonomy tools workspace approval escalation guardrails",
       content: (
         <>
           <p className="mb-4">
-            Every layer runs inside your perimeter. Physiclaw implements defense-in-depth with five concentric security rings:
+            Agents execute tasks by reasoning over your request, selecting tools from their persona toolchain, and operating in an isolated workspace. You control how much autonomy they have and how actions are approved and audited.
           </p>
-          <div className="overflow-x-auto">
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Execution model</h3>
+          <p className="mb-4 text-sage text-sm">
+            Each agent run gets a sandboxed workspace (filesystem and network scoped by config). The agent chooses which tools to call (e.g. query Prometheus, run a Terraform plan, execute a SQL query) and in what order. Tool outputs are fed back into the model for the next step until the task is done or a limit is reached. All tool invocations are logged and can be tied to an audit trail.
+          </p>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Autonomy levels</h3>
+          <p className="mb-4 text-sage text-sm">
+            You can configure agents to run in fully autonomous mode (execute and report), approval-required mode (propose actions and wait for human approval), or read-only mode (query and suggest only). This is typically set per persona or per environment (e.g. production requires approval, staging allows autonomy). Escalation paths (e.g. notify Slack, create a ticket) are configurable when an agent needs human input or when a run fails.
+          </p>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Guardrails</h3>
+          <p className="text-sage text-sm">
+            Tool use can be restricted by allowlists (e.g. which APIs or commands an agent may call), rate limits, and scope (e.g. which namespaces or projects). Sensitive operations (key access, destructive changes) can be gated behind approval or restricted entirely. This gives enterprise teams confidence to grant autonomy for routine work while keeping high-impact actions under control.
+          </p>
+        </>
+      ),
+    },
+    {
+      id: "security",
+      title: "Security Architecture",
+      keywords: "security encryption zero trust HSM TPM audit compliance attestation",
+      content: (
+        <>
+          <p className="mb-4">
+            Every layer runs inside your perimeter. Physiclaw implements defense-in-depth with five concentric security rings so you can meet strict compliance and air-gap requirements without trading off on agent capability.
+          </p>
+          <div className="overflow-x-auto mb-6">
             <table className="w-full text-sm text-sage border border-navy-200/50 rounded-lg overflow-hidden">
               <thead>
                 <tr className="bg-navy-300/50">
@@ -167,6 +191,38 @@ make build
               </tbody>
             </table>
           </div>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Attestation and audit</h3>
+          <p className="mb-4 text-sage text-sm">
+            Agent runs and tool calls can be recorded in a tamper-evident Merkle log or similar backend. Outputs can be signed (e.g. with Cosign) so you have cryptographic proof of what an agent did and when. This supports compliance (SOC 2, HIPAA, FedRAMP) and internal governance. Audit logs can be exported to your SIEM or retention store (WORM) so nothing is lost and everything is attributable.
+          </p>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Secrets and keys</h3>
+          <p className="text-sage text-sm">
+            API keys, model weights, and RAG credentials are never stored in plaintext on disk. Support for HSM, TPM 2.0, and Vault lets you seal secrets to hardware identity and rotate them without agent downtime. Key material is available only to the process that needs it and is not exposed in logs or telemetry.
+          </p>
+        </>
+      ),
+    },
+    {
+      id: "enterprise-autonomy",
+      title: "Enterprise Deployment and Governance",
+      keywords: "enterprise governance deployment high availability scaling",
+      content: (
+        <>
+          <p className="mb-4">
+            Physiclaw is built for organizations that need agent autonomy without losing control. Deployment patterns, governance, and operational guardrails are designed so security and platform teams can standardize how agents run across environments.
+          </p>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Deployment patterns</h3>
+          <p className="mb-4 text-sage text-sm">
+            Run a single node for dev or small teams; scale horizontally with multiple gateway and worker nodes for production. You can deploy behind your existing load balancer and identity provider. Agents can be scoped by namespace, project, or tag so different teams or environments get the right personas and tool access without cross-tenant leakage.
+          </p>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Governance</h3>
+          <p className="mb-4 text-sage text-sm">
+            Define who can invoke which agents and with what autonomy level (e.g. read-only vs. autonomous). Approval workflows can require one or more human approvals for sensitive actions. All invocations and decisions are auditable. This lets you roll out autonomy gradually: start with read-only and recommendations, then enable approved actions, then autonomous execution where policy allows.
+          </p>
+          <h3 className="text-base font-semibold text-gold-light mt-6 mb-2">Operational control</h3>
+          <p className="text-sage text-sm">
+            You own the full stack: models, inference runtime, vector store, and audit backend. There is no vendor lock-in or mandatory SaaS. You can air-gap the entire system, run in disconnected regions, and meet regulatory requirements (e.g. data residency, no telemetry) while still giving teams the benefits of AI-powered automation.
+          </p>
         </>
       ),
     },
@@ -306,7 +362,7 @@ npm run dev`}
             </div>
             <div>
               <h4 className="font-semibold text-gold-light mb-1">What license is Physiclaw under?</h4>
-              <p className="text-sage text-sm">Apache License 2.0. The core agent runtime is adapted from OpenClaw (MIT).</p>
+              <p className="text-sage text-sm">Apache License 2.0. You can read the full text at <a href="https://www.apache.org/licenses/LICENSE-2.0.txt" target="_blank" rel="noopener noreferrer" className="text-gold-light hover:underline">apache.org/licenses/LICENSE-2.0.txt</a>. The core agent runtime is adapted from OpenClaw (MIT).</p>
             </div>
             <div>
               <h4 className="font-semibold text-gold-light mb-1">Can I use my own models?</h4>
@@ -401,7 +457,7 @@ export default function DocsPage() {
       </div>
 
       <p className="mt-14 pt-6 border-t border-navy-200/50 text-sm text-sage-dim">
-        For more detail, see the <Link href="/whitepaper" className="text-gold-light hover:underline">Whitepaper</Link> and the <a href="https://github.com/physiclaw" target="_blank" rel="noopener noreferrer" className="text-gold-light hover:underline">GitHub repository</a>.
+        For more detail, see the <Link href="/whitepaper" className="text-gold-light hover:underline">Whitepaper</Link> and the <a href="https://github.com/CommanderZed/Physiclaw" target="_blank" rel="noopener noreferrer" className="text-gold-light hover:underline">GitHub repository</a>.
       </p>
     </div>
   );

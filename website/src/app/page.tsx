@@ -2,7 +2,6 @@
 
 import {
   Github,
-  Zap,
   ChevronDown,
   Server,
   Plug,
@@ -43,14 +42,7 @@ export default function Home() {
 
           <div className="flex justify-center gap-4 mb-16">
             <a
-              href="#quick-start"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-gold text-navy hover:bg-gold-light transition-colors"
-            >
-              <Zap className="w-4 h-4" />
-              Get Started
-            </a>
-            <a
-              href="https://github.com/physiclaw"
+              href="https://github.com/CommanderZed/Physiclaw"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-sage-light bg-navy-300/60 border border-navy-200/60 hover:border-sage/15 hover:text-gold-light transition-all"
