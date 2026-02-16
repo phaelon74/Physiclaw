@@ -1,0 +1,67 @@
+{
+  "id": "memory-hybrid",
+  "kind": "memory",
+  "uiHints": {
+    "embedding.provider": {
+      "label": "Embedding Provider",
+      "help": "openai for OpenAI API, local for node-llama-cpp (CPU)"
+    },
+    "embedding.model": {
+      "label": "Embedding Model",
+      "placeholder": "text-embedding-3-small or hf:ggml-org/embeddinggemma-300m-qat-q8_0-GGUF/...",
+      "help": "Model name (OpenAI) or path (local)"
+    },
+    "embedding.apiKey": {
+      "label": "OpenAI API Key",
+      "sensitive": true,
+      "placeholder": "sk-proj-...",
+      "help": "Required when provider is openai (or use ${OPENAI_API_KEY})"
+    },
+    "lanceDbPath": {
+      "label": "LanceDB Path",
+      "placeholder": "~/.openclaw/memory/lancedb",
+      "advanced": true
+    },
+    "sqlitePath": {
+      "label": "SQLite Path",
+      "placeholder": "~/.openclaw/memory/facts.db",
+      "advanced": true
+    },
+    "autoCapture": {
+      "label": "Auto-Capture",
+      "help": "Automatically capture important information from conversations"
+    },
+    "autoRecall": {
+      "label": "Auto-Recall",
+      "help": "Automatically inject relevant memories into context"
+    },
+    "captureMaxChars": {
+      "label": "Capture Max Chars",
+      "placeholder": "500",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "embedding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": { "type": "string", "enum": ["openai", "local"] },
+          "apiKey": { "type": "string" },
+          "model": { "type": "string" },
+          "baseUrl": { "type": "string" },
+          "modelPath": { "type": "string" },
+          "modelCacheDir": { "type": "string" }
+        }
+      },
+      "lanceDbPath": { "type": "string" },
+      "sqlitePath": { "type": "string" },
+      "autoCapture": { "type": "boolean" },
+      "autoRecall": { "type": "boolean" },
+      "captureMaxChars": { "type": "number", "minimum": 100, "maximum": 10000 }
+    }
+  }
+}

@@ -211,6 +211,7 @@
       "tough-cookie": "4.1.3"
     },
     "onlyBuiltDependencies": [
+      "better-sqlite3",
       "@lydell/node-pty",
       "@matrix-org/matrix-sdk-crypto-nodejs",
       "@napi-rs/canvas",

@@ -1,0 +1,20 @@
+{
+  "name": "@openclaw/memory-hybrid",
+  "version": "2026.2.16",
+  "private": true,
+  "description": "Hybrid memory plugin: SQLite+FTS5 for structured facts, LanceDB for semantic search",
+  "type": "module",
+  "dependencies": {
+    "@lancedb/lancedb": "^0.26.2",
+    "@sinclair/typebox": "0.34.48",
+    "better-sqlite3": "^11.0.0",
+    "node-llama-cpp": "3.15.1",
+    "openai": "^6.22.0"
+  },
+  "devDependencies": {
+    "openclaw": "workspace:*"
+  },
+  "openclaw": {
+    "extensions": ["./index.ts"]
+  }
+}

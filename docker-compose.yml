@@ -1,6 +1,9 @@
 services:
   physiclaw-core:
-    image: ${PHYSICLAW_IMAGE:-ghcr.io/physiclaw/core:latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${PHYSICLAW_IMAGE:-physiclaw/core:local}
     environment:
       HOME: /home/node
       TERM: xterm-256color
@@ -31,7 +34,10 @@ services:
       ]
 
   physiclaw-cli:
-    image: ${PHYSICLAW_IMAGE:-ghcr.io/physiclaw/core:latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${PHYSICLAW_IMAGE:-physiclaw/core:local}
     environment:
       HOME: /home/node
       TERM: xterm-256color

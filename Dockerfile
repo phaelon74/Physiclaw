@@ -6,6 +6,14 @@ ENV PATH="/root/.bun/bin:${PATH}"
 
 RUN corepack enable
 
+# Build tools for native modules (better-sqlite3, node-llama-cpp)
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    build-essential \
+    python3 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
 WORKDIR /app
 
 ARG PHYSICLAW_DOCKER_APT_PACKAGES=""
@@ -19,8 +27,9 @@ RUN if [ -n "$PHYSICLAW_DOCKER_APT_PACKAGES" ]; then \
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY patches ./patches
 COPY scripts ./scripts
+COPY extensions ./extensions
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 COPY . .
 RUN pnpm build
