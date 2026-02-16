@@ -25,9 +25,12 @@ export default function Home() {
 
       {/* ═══════════ NAV ═══════════ */}
       <nav className="relative z-20 border-b border-navy-200/60">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <PhysiclawLogo height={26} />
-          <div className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto px-6 h-16 grid grid-cols-3 items-center">
+          <div className="flex justify-start" />
+          <a href="/" className="flex justify-center" aria-label="Physiclaw home">
+            <PhysiclawLogo height={26} />
+          </a>
+          <div className="flex justify-end items-center gap-2">
             <a
               href="/whitepaper"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-sage-light bg-navy-300/60 border border-navy-200/60 hover:border-sage/15 hover:text-gold-light transition-all"
@@ -50,7 +53,7 @@ export default function Home() {
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative z-10 pt-20 pb-8 px-6" id="quick-start">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-4" style={{ color: "#f7e2aa" }}>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6" style={{ color: "#f7e2aa" }}>
             Functional AI agents on{" "}
             <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(to right, #F4D58D, #BF0603)" }}>
               your hardware
@@ -58,20 +61,8 @@ export default function Home() {
             .
           </h1>
 
-          <p className="text-xs font-mono text-sage-dim uppercase tracking-widest mb-2">What it is</p>
-          <p className="text-lg sm:text-xl text-sage-light max-w-2xl mx-auto font-medium mb-6" id="what-it-is">
-            Open-source software that runs AI agents entirely on your own servers. No cloud dependency, no telemetry, no vendor lock-in.
-          </p>
-
-          <div className="max-w-2xl mx-auto mb-10 rounded-xl border border-navy-200/50 bg-navy-300/30 px-6 py-5 text-left">
-            <p className="text-xs font-mono text-sage-dim uppercase tracking-widest mb-3">Why it matters</p>
-            <p className="text-sage leading-relaxed">
-              Most AI agent platforms require the cloud and send your data upstream. Physiclaw runs inside your perimeter. You keep full control, meet air-gap and compliance requirements, and own the entire stack.
-            </p>
-          </div>
-
-          <p className="text-base sm:text-lg text-sage max-w-2xl mx-auto leading-relaxed mb-12">
-            Deploy on bare metal, VMs, or Kubernetes. Apache 2.0. You own the stack.
+          <p className="text-lg sm:text-xl text-sage max-w-2xl mx-auto leading-relaxed mb-10">
+            Open-source software that runs AI agents on your own servers. No cloud, no telemetry, no lock-in. Deploy on bare metal, VMs, or Kubernetes.
           </p>
 
           <div className="flex justify-center gap-4 mb-16">

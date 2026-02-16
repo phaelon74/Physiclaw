@@ -14,6 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://physiclaw.dev"),
   title: "Physiclaw — Functional AI Agents on Your Hardware",
   description:
     "Open-source software that runs AI agents entirely on your own servers. No cloud, no telemetry, no lock-in. Deploy on bare metal, VMs, or Kubernetes and keep full control.",
