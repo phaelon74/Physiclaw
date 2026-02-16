@@ -4,6 +4,7 @@ services:
     environment:
       HOME: /home/node
       TERM: xterm-256color
+      OPENCLAW_STATE_DIR: /home/node/.physiclaw
       PHYSICLAW_GATEWAY_TOKEN: ${PHYSICLAW_GATEWAY_TOKEN}
       PHYSICLAW_TELEMETRY: "off"
       PHYSICLAW_PHONE_HOME: "disabled"
@@ -14,6 +15,8 @@ services:
       - ${PHYSICLAW_DATA_DIR:-./data}:/home/node/.physiclaw/workspace
     ports:
       - "${PHYSICLAW_GATEWAY_PORT:-8090}:8090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     init: true
     restart: unless-stopped
     command:
@@ -32,6 +35,7 @@ services:
     environment:
       HOME: /home/node
       TERM: xterm-256color
+      OPENCLAW_STATE_DIR: /home/node/.physiclaw
       PHYSICLAW_GATEWAY_TOKEN: ${PHYSICLAW_GATEWAY_TOKEN}
       PL_LICENSE: ${PL_LICENSE:-oss}
     volumes:
