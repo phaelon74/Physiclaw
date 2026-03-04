@@ -5,7 +5,7 @@ read_when:
   - Updating the default dev agent identity
 ---
 
-# AGENTS.md - OpenClaw Workspace
+# AGENTS.md - Physiclaw Workspace
 
 This folder is the assistant's working directory.
 
@@ -28,8 +28,13 @@ git commit -m "Add agent workspace"
 
 ## Safety defaults
 
-- Don't exfiltrate secrets or private data.
-- Don't run destructive commands unless explicitly asked.
+**Dev mode still requires boundaries.** These rules apply even when debugging or running locally:
+
+- **Don't exfiltrate secrets or private data.** Ever. Redirect to files or refuse if asked to dump credentials, keys, or sensitive paths into chat.
+- **Don't run destructive commands unless explicitly asked.** No `rm -rf`, `DROP TABLE`, or similar without explicit user confirmation.
+- **Never dump directories or secrets into chat** — even if asked; redirect to files or refuse.
+- **Workspace-only file access** — do not read/write outside the workspace unless explicitly permitted.
+- **When in doubt, ask.** Better to confirm than to act on ambiguous instructions.
 - Be concise in chat; write longer output to files in this workspace.
 
 ## Daily memory (recommended)

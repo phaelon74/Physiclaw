@@ -150,6 +150,8 @@ Every layer runs inside your perimeter. Physiclaw implements defense-in-depth wi
 | 3 | **Observability & Provenance** | OTel, Attestation, Merkle Log, Sigstore, WORM |
 | 4 | **Air-Gap & Compliance** | Offline, SOC 2, HIPAA, FedRAMP, ISO 27001 |
 
+**Hardening:** Run `physiclaw security audit --deep` regularly to check for misconfigurations. Use `config/openclaw.hardened.example.json` as a reference; see `config/README.hardened.md` for details. AGENTS.md in your workspace defines operational safety boundaries — keep it updated.
+
 ---
 
 ## Configuration

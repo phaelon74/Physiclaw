@@ -1,0 +1,30 @@
+# signal-cli daemon for Physiclaw Signal channel integration
+# Uses native GraalVM binary; exposes HTTP JSON-RPC + SSE at /api/v1/*
+FROM ubuntu:24.04
+
+ARG SIGNAL_CLI_VERSION=0.14.0
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+# Download and install signal-cli native binary (Linux x86_64)
+RUN curl -sL "https://github.com/AsamK/signal-cli/releases/download/v${SIGNAL_CLI_VERSION}/signal-cli-${SIGNAL_CLI_VERSION}-Linux-native.tar.gz" | tar xz -C /tmp && \
+    mv "$(find /tmp -name 'signal-cli' -type f | head -1)" /usr/local/bin/ && \
+    chmod +x /usr/local/bin/signal-cli && \
+    rm -rf /tmp/signal-cli-*
+
+# signal-cli data dir (mount volume here)
+ENV XDG_DATA_HOME=/home/.local/share
+ENV HOME=/home
+
+# Create mount point for volume
+RUN mkdir -p /home/.local/share/signal-cli
+
+EXPOSE 8080
+
+# Multi-account daemon with HTTP; requires explicit channel in v0.14+
+CMD ["signal-cli", "daemon", "--http=0.0.0.0:8080", "--receive-mode", "on-start"]

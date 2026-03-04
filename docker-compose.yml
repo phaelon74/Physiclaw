@@ -1,9 +1,27 @@
 services:
+  signal-cli:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.signal
+    image: ${PHYSICLAW_SIGNAL_IMAGE:-physiclaw/signal-cli:local}
+    volumes:
+      - signal-cli-data:/home/.local/share/signal-cli
+    command: ["signal-cli", "daemon", "--http=0.0.0.0:8080", "--receive-mode", "on-start"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/api/v1/check"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
   physiclaw-core:
     build:
       context: .
       dockerfile: Dockerfile
     image: ${PHYSICLAW_IMAGE:-physiclaw/core:local}
+    depends_on:
+      - signal-cli
     environment:
       HOME: /home/node
       TERM: xterm-256color
@@ -51,3 +69,6 @@ services:
     tty: true
     init: true
     entrypoint: ["node", "dist/index.js"]
+
+volumes:
+  signal-cli-data:
